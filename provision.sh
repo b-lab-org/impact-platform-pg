@@ -1,8 +1,15 @@
 #!/bin/bash
 set -e
 
+# connections
 echo "host all  all    0.0.0.0/0  md5" >> /var/lib/postgresql/data/pg_hba.conf
 echo "checkpoint_segments=200" >> /var/lib/postgresql/data/postgresql.conf
-echo "ssl = true" >> /var/lib/postgresql/data/postgresql.conf
-echo "ssl_cert_file = '/ssl/cert.crt'" >> /var/lib/postgresql/data/postgresql.conf
-echo "ssl_key_file = '/ssl/cert.key'" >> /var/lib/postgresql/data/postgresql.conf
+
+# turn on ssl
+cd "${PGDATA}"
+cp /ssl/cert.crt "${PGDATA}"/server.crt
+cp /ssl/cert.key "${PGDATA}"/server.key
+chmod og-rwx server.key
+chown -R postgres:postgres "${PGDATA}"
+
+sed -ri "s/^#?(ssl\s*=\s*)\S+/\1'on'/" "$PGDATA/postgresql.conf"
