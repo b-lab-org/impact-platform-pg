@@ -1,3 +1,6 @@
+## 0.0.4
+* Postgres 9.6
+
 ## 0.0.3
 * Cleaning up SSL
 
