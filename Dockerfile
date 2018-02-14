@@ -1,4 +1,4 @@
-FROM postgres:9.4-alpine
+FROM postgres:10.2-alpine
 MAINTAINER "The Impact Bot" <technology@bcorporation.net>
 
 RUN apk add --update --no-cache \
